@@ -3,12 +3,10 @@ using Framework;
 
 namespace Ui
 {
-  class Program
-  {
-    static void Main(string[] args)
+    class Program
     {
-      var blah = new Class1();
-      blah.SayHello();
+        static void Main(string[] args)
+        {
+        }
     }
-  }
 }
