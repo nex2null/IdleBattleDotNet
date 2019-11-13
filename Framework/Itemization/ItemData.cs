@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Framework.Itemization.Enums;
 using Framework.Itemization.Equipment;
 
 namespace Framework.Itemization
@@ -22,6 +24,14 @@ namespace Framework.Itemization
 
             AllItemInformations = new List<ItemInformation>();
             AllItemInformations.AddRange(EquipmentInformations);
+        }
+
+        /// <summary>
+        /// Gets the affix information for a given affix type
+        /// </summary>
+        public static EquipmentAffixInformation GetAffixInformation(EquipmentAffixTypeEnum affixType)
+        {
+            return EquipmentAffixInformations.First(x => x.Type == affixType);
         }
     }
 }

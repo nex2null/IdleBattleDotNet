@@ -16,7 +16,23 @@ namespace Framework.Itemization.Equipment
             ItemRarityEnum rarity,
             int itemLevel)
         {
-            throw new NotImplementedException();
+            // Create a normal item of the given base type
+            var equipment = new Equipment(
+                baseType,
+                ItemRarityEnum.Normal,
+                itemLevel,
+                "Test Equipment",
+                GetEquipmentSlot(baseType),
+                GenerateImplicits(baseType),    
+                new List<EquipmentAffix>(),
+                GetEquipmentLevel(baseType)
+            );
+
+            // If the rarity is magic or rare then upgrade the item to it
+            if (rarity == ItemRarityEnum.Magic || rarity == ItemRarityEnum.Rare)
+                UpgradeEquipmentToRarity(equipment, rarity);
+
+            return equipment;
         }
 
         /// <summary>
@@ -155,14 +171,6 @@ namespace Framework.Itemization.Equipment
         }
 
         /// <summary>
-        /// Gets the affix information for a given type
-        /// </summary>
-        private static EquipmentAffixInformation GetEquipmentAffixInformation(EquipmentAffixTypeEnum affixType)
-        {
-            return ItemData.EquipmentAffixInformations.First(x => x.Type == affixType);
-        }
-
-        /// <summary>
         /// Populates the affixes on a piece of equipment
         /// </summary>
         private static void PopulateEquipmentAffixes(Equipment equipment, bool clearExistingAffixes)
@@ -172,39 +180,24 @@ namespace Framework.Itemization.Equipment
                 equipment.Affixes.Clear();
 
             // Get existing prefix/suffix counts on the item
-            var existingPrefixCount = equipment.Affixes.Where(x =>
-                GetEquipmentAffixInformation(x.Type).Slot == EquipmentAffixSlotEnum.Prefix).Count();
-            var existingSuffixCount = equipment.Affixes.Where(x =>
-                GetEquipmentAffixInformation(x.Type).Slot == EquipmentAffixSlotEnum.Suffix).Count();
+            var existingPrefixCount = equipment.CountAffixes(EquipmentAffixSlotEnum.Prefix);
+            var existingSuffixCount = equipment.CountAffixes(EquipmentAffixSlotEnum.Suffix);
 
             // Figure out how many prefixes / suffixes to generate
             var minAffixCount = GetMinAffixCountPerSlot(equipment.Rarity);
             var maxAffixAcount = GetMaxAffixCountPerSlot(equipment.Rarity);
             var prefixCount = RandomHelper.GetRandomInt(minAffixCount - existingPrefixCount, maxAffixAcount - existingPrefixCount);
             var suffixCount = RandomHelper.GetRandomInt(minAffixCount - existingSuffixCount, maxAffixAcount - existingSuffixCount);
+            var affixesToGenerate = prefixCount + suffixCount;
 
             // Make sure we always generate at least 1 new prefix/suffix if we are upgrading and we have room
-            if (prefixCount + suffixCount == 0)
-            {
-                // Determine if we should generate a new prefix (or suffix)
-                var shouldGeneratePrefix = RandomHelper.CoinFlip();
+            var availableAffixRoom = maxAffixAcount * 2 - (existingPrefixCount + existingSuffixCount);
+            if (affixesToGenerate == 0 && availableAffixRoom > 0)
+                affixesToGenerate = 1;
 
-                // If we should generate a prefix, and we have room, then ensure we generate one
-                if (shouldGeneratePrefix && prefixCount < maxAffixAcount)
-                    prefixCount++;
-
-                // Otherwise check if we have room to generate a suffix
-                else if (suffixCount < maxAffixAcount)
-                    suffixCount++;
-            }
-
-            // Generate prefixes and suffixes
-            var prefixes = GenerateAffixes(EquipmentAffixSlotEnum.Prefix, prefixCount, equipment.ItemLevel);
-            var suffixes = GenerateAffixes(EquipmentAffixSlotEnum.Suffix, suffixCount, equipment.ItemLevel);
-
-            // Set the affixes on the equipment
-            equipment.Affixes.AddRange(prefixes);
-            equipment.Affixes.AddRange(suffixes);
+            // Generate the affixes
+            for (var i = 0; i < affixesToGenerate; i++)
+                AddRandomAffixToEquipment(equipment);
         }
 
         // Re-rolls all the affixes on a piece of equipment
@@ -219,10 +212,8 @@ namespace Framework.Itemization.Equipment
         public static void AddRandomAffixToEquipment(Equipment equipment)
         {
             // Get existing prefix/suffix counts on the item
-            var existingPrefixCount = equipment.Affixes.Where(x =>
-                GetEquipmentAffixInformation(x.Type).Slot == EquipmentAffixSlotEnum.Prefix).Count();
-            var existingSuffixCount = equipment.Affixes.Where(x =>
-                GetEquipmentAffixInformation(x.Type).Slot == EquipmentAffixSlotEnum.Suffix).Count();
+            var existingPrefixCount = equipment.CountAffixes(EquipmentAffixSlotEnum.Prefix);
+            var existingSuffixCount = equipment.CountAffixes(EquipmentAffixSlotEnum.Suffix);
 
             // Sanity check that we are not at the max affixes already
             var maxAffixCountPerSlot = GetMaxAffixCountPerSlot(equipment.Rarity);
