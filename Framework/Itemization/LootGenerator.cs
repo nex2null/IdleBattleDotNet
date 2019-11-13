@@ -79,7 +79,7 @@ namespace Framework.Itemization
         /// </summary>
         public CurrencyDropper(List<CurrencyDropRate> currencyDropRates)
         {
-
+            InitializeDropTable(currencyDropRates);
         }
 
         /// <summary>
