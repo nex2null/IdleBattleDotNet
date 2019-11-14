@@ -244,7 +244,7 @@ namespace Framework.Itemization
         {
             // TODO: Make this not completely random, obviously
             var validItems = ItemData.AllItemInformations.Where(x => x.ItemSuperType == superType);
-            return validItems.ElementAt(RandomHelper.GetRandomInt(0, validItems.Count())).ItemType;
+            return validItems.ElementAt(RandomHelper.GetRandomInt(0, validItems.Count() - 1)).ItemType;
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Framework.Itemization
             // Return a random rarity
             if (randomNumber <= 50)
                 return ItemRarityEnum.Normal;
-            else if (randomNumber <= 85)
+            else if (randomNumber <= 90)
                 return ItemRarityEnum.Magic;
             else
                 return ItemRarityEnum.Rare;
