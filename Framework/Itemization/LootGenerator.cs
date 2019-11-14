@@ -87,6 +87,8 @@ namespace Framework.Itemization
         /// </summary>
         public void InitializeDropTable(List<CurrencyDropRate> currencyDropRates)
         {
+            DropTable = new List<CurrencyDropTableRow>();
+
             // Keep track of the sum 'chance to drop per thousand' of the drop rates
             var chanceToDropPerThousandSum = 0;
 
@@ -214,7 +216,7 @@ namespace Framework.Itemization
         private static Item GenerateSingleLoot(LootGenerationOption option)
         {
             // Determine if we are going to generate anything
-            if (RandomHelper.GetRandomInt(1, 100) > option.Chance)
+            if (RandomHelper.GetRandomDecimal(0, 100) > option.Chance)
                 return null;
 
             // Determine the item type
@@ -243,7 +245,7 @@ namespace Framework.Itemization
         private static ItemTypeEnum GetRandomItemType(ItemSuperTypeEnum superType)
         {
             // TODO: Make this not completely random, obviously
-            var validItems = ItemData.AllItemInformations.Where(x => x.ItemSuperType == superType);
+            var validItems = ItemData.GetAllItemsOfSuperType(superType);
             return validItems.ElementAt(RandomHelper.GetRandomInt(0, validItems.Count() - 1)).ItemType;
         }
 

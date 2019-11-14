@@ -13,9 +13,10 @@ namespace Framework.Itemization.Equipment
         /// Constructor
         /// </summary>
         public EquipmentInformation(
+            string itemName,
             ItemTypeEnum itemType,
             EquipmentSlotEnum slot,
-            int baseRequiredLevel) : base(itemType, ItemSuperTypeEnum.Equipment, 1, 1)
+            int baseRequiredLevel) : base(itemName, itemType, ItemSuperTypeEnum.Equipment, 1, 1)
         {
             Slot = slot;
             BaseRequiredLevel = baseRequiredLevel;
@@ -28,9 +29,9 @@ namespace Framework.Itemization.Equipment
         {
             return new List<EquipmentInformation>
             {
-                new EquipmentInformation(ItemTypeEnum.FrayedClothRobe, EquipmentSlotEnum.ChestPiece, 1),
-                new EquipmentInformation(ItemTypeEnum.RustedChainmail, EquipmentSlotEnum.ChestPiece, 1),
-                new EquipmentInformation(ItemTypeEnum.WornLeatherChest, EquipmentSlotEnum.ChestPiece, 1)
+                new EquipmentInformation("Frayed Cloth Robe", ItemTypeEnum.FrayedClothRobe, EquipmentSlotEnum.ChestPiece, 1),
+                new EquipmentInformation("Rusted Chainmail", ItemTypeEnum.RustedChainmail, EquipmentSlotEnum.ChestPiece, 1),
+                new EquipmentInformation("Worn Leather Chest", ItemTypeEnum.WornLeatherChest, EquipmentSlotEnum.ChestPiece, 1)
             };
         }
     }

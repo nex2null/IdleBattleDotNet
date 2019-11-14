@@ -40,7 +40,7 @@ namespace Framework.Itemization.Equipment
         /// </summary>
         private static EquipmentSlotEnum GetEquipmentSlot(ItemTypeEnum baseType)
         {
-            return ItemData.EquipmentInformations.First(x => x.ItemType == baseType).Slot;
+            return ItemData.GetEquipmentInformation(baseType).Slot;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Framework.Itemization.Equipment
         /// </summary>
         private static int GetEquipmentLevel(ItemTypeEnum baseType)
         {
-            return ItemData.EquipmentInformations.First(x => x.ItemType == baseType).BaseRequiredLevel;
+            return ItemData.GetEquipmentInformation(baseType).BaseRequiredLevel;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Framework.Itemization.Equipment
             var generatedImplicits = new List<EquipmentImplicit>();
 
             // Grab all the implicits for the base type
-            var baseTypeImplicits = ItemData.EquipmentImplicitInformations.Where(x => x.ItemType == baseType);
+            var baseTypeImplicits = ItemData.GetEquipmentImplicitInformation(baseType);
 
             // Generate the implicits
             foreach (var baseImplicit in baseTypeImplicits)
@@ -119,7 +119,7 @@ namespace Framework.Itemization.Equipment
             switch (rarity)
             {
                 case ItemRarityEnum.Normal: return 0;
-                case ItemRarityEnum.Magic: return 1;
+                case ItemRarityEnum.Magic: return 0;
                 case ItemRarityEnum.Rare: return 1;
                 default: throw new Exception($"Could not find max affix count for item rarity: {rarity}");
             }

@@ -17,10 +17,11 @@ namespace Framework.Itemization
         /// Constructor
         /// </summary>
         public CurrencyInformation(
+            string name,
             ItemTypeEnum itemType,
             bool isTargeted,
             ItemSuperTypeEnum? targetItemSuperType,
-            Func<Item, bool> use) : base(itemType, ItemSuperTypeEnum.Currency, 1, 99)
+            Func<Item, bool> use) : base(name, itemType, ItemSuperTypeEnum.Currency, 1, 99)
         {
             IsTargeted = isTargeted;
             TargetItemSuperType = targetItemSuperType;
@@ -297,6 +298,7 @@ namespace Framework.Itemization
             {
                 // Orb of abolition
                 new CurrencyInformation(
+                    "Orb of Abolition",
                     ItemTypeEnum.OrbOfAbolition,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -305,6 +307,7 @@ namespace Framework.Itemization
 
                 // Orb of imbuing
                 new CurrencyInformation(
+                    "Orb of Imbuing",
                     ItemTypeEnum.OrbOfImbuing,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -313,6 +316,7 @@ namespace Framework.Itemization
 
                 // Orb of conjury
                 new CurrencyInformation(
+                    "Orb of Conjury",
                     ItemTypeEnum.OrbOfConjury,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -321,6 +325,7 @@ namespace Framework.Itemization
 
                 // Orb of promotion
                 new CurrencyInformation(
+                    "Orb of Promotion",
                     ItemTypeEnum.OrbOfPromotion,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -329,6 +334,7 @@ namespace Framework.Itemization
 
                 // Orb of mutation
                 new CurrencyInformation(
+                    "Orb of Mutation",
                     ItemTypeEnum.OrbOfMutation,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -337,6 +343,7 @@ namespace Framework.Itemization
 
                 // Orb of pandemonium
                 new CurrencyInformation(
+                    "Orb of Pandemonium",
                     ItemTypeEnum.OrbOfPandemonium,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -345,6 +352,7 @@ namespace Framework.Itemization
 
                 // Orb of thaumaturgy
                 new CurrencyInformation(
+                    "Orb of Thaumaturgy",
                     ItemTypeEnum.OrbOfThaumaturgy,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -353,6 +361,7 @@ namespace Framework.Itemization
 
                 // Orb of fortune
                 new CurrencyInformation(
+                    "Orb of Fortune",
                     ItemTypeEnum.OrbOfFortune,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -361,6 +370,7 @@ namespace Framework.Itemization
 
                 // Orb of balance
                 new CurrencyInformation(
+                    "Orb of Balance",
                     ItemTypeEnum.OrbOfBalance,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -369,6 +379,7 @@ namespace Framework.Itemization
 
                 // Orb of perfection
                 new CurrencyInformation(
+                    "Orb of Perfection",
                     ItemTypeEnum.OrbOfPerfection,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -377,6 +388,7 @@ namespace Framework.Itemization
 
                 // Alpha orb
                 new CurrencyInformation(
+                    "Alpha Orb",
                     ItemTypeEnum.AlphaOrb,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -385,6 +397,7 @@ namespace Framework.Itemization
 
                 // Omega orb
                 new CurrencyInformation(
+                    "Omega Orb",
                     ItemTypeEnum.OmegaOrb,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -393,6 +406,7 @@ namespace Framework.Itemization
 
                 // Orb of extraction
                 new CurrencyInformation(
+                    "Orb of Extraction",
                     ItemTypeEnum.OrbOfExtraction,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -401,6 +415,7 @@ namespace Framework.Itemization
 
                 // Orb of distillation
                 new CurrencyInformation(
+                    "Orb of Distillation",
                     ItemTypeEnum.OrbOfDistillation,
                     true,
                     ItemSuperTypeEnum.Equipment,
@@ -409,6 +424,7 @@ namespace Framework.Itemization
 
                 // Orb of empowerment
                 new CurrencyInformation(
+                    "Orb of Empowerment",
                     ItemTypeEnum.OrbOfEmpowerment,
                     false,
                     null,

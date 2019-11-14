@@ -11,7 +11,16 @@ namespace Framework.Helpers
         /// </summary>
         public static int GetRandomInt(int min, int max)
         {
-            return _random.Next(min, max);
+            return _random.Next(min, max + 1);
+        }
+
+        /// <summary>
+        /// Gets a random decimal between two numbers
+        /// </summary>
+        public static decimal GetRandomDecimal(int min, int max)
+        {
+            var next = _random.NextDouble();
+            return Convert.ToDecimal(min + (next * (max - min)));
         }
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Framework.Itemization
             // TODO: Make this whole thing handle stacking better
 
             // Grab the item information for the item being added
-            var itemInformation = ItemData.AllItemInformations.First(x => x.ItemType == item.Type);
+            var itemInformation = ItemData.GetItemInformation(item.Type);
 
             // Find an item in our list of items that has an amount that can
             // accomodate the amount of the item we are trying to add
