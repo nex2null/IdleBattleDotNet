@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Framework;
 using Framework.Itemization;
 using Framework.Itemization.Enums;
 using Framework.Itemization.Equipment;
@@ -11,7 +12,12 @@ namespace Ui
     {
         static void Main(string[] args)
         {
-            GenerateUntilEscape();
+            DoBattleThings();
+        }
+
+        static void DoBattleThings()
+        {
+            Game.Instance.StartBattle(1).Wait();
         }
 
         static void GenerateUntilEscape()

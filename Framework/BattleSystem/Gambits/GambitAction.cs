@@ -15,7 +15,7 @@ namespace Framework.BattleSystem.Gambits
         public string ConditionInput { get; set; }
         public GambitTypeEnum Type { get; set; }
         public ISkill Action { get; set; }
-        public decimal ActivationChance { get; set; }
+        public int ActivationChance { get; set; }
 
         /// <summary>
         /// Constructor
@@ -25,13 +25,13 @@ namespace Framework.BattleSystem.Gambits
             string conditionInput,
             GambitTypeEnum type,
             string actionName,
-            decimal? activationChance = null)
+            int? activationChance = null)
         {
             Condition = condition;
             ConditionInput = conditionInput;
             Type = type;
             Action = FindAction(actionName);
-            ActivationChance = activationChance ?? 1;
+            ActivationChance = activationChance ?? 100;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Framework.BattleSystem.Gambits
             // TODO: Don't make this dynamic
 
             // Determine if we can activate
-            if (ActivationChance < 1 && RandomHelper.GetRandomDecimal(0, 1) > ActivationChance)
+            if (ActivationChance < 100 && RandomHelper.GetRandomDecimal(1, 100) > ActivationChance)
                 return null;
 
             // Grab the potential matches for the condition

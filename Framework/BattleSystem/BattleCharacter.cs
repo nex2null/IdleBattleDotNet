@@ -110,7 +110,7 @@ namespace Framework.BattleSystem
         public void ApplyDamage(BattleDamage damage)
         {
             // Allow effects to modify damage before processing
-            Effects.ForEach(x => x.BeforeDamageTaken(damage));
+            GetActiveEffects().ForEach(x => x.BeforeDamageTaken(damage));
 
             // Round the damage
             damage.Amount = decimal.Round(damage.Amount);
@@ -122,7 +122,7 @@ namespace Framework.BattleSystem
             Hp = Hp < 0 ? 0 : Hp;
 
             // Allow effects to process damage taken
-            Effects.ForEach(x => x.AfterDamageTaken(damage));
+            GetActiveEffects().ForEach(x => x.AfterDamageTaken(damage));
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Framework.BattleSystem
         public void BeforeActionPerformed()
         {
             // Allow effects to trigger before an action has been performed
-            Effects.ForEach(x => x.BeforeActionPerformed());
+            GetActiveEffects().ForEach(x => x.BeforeActionPerformed());
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Framework.BattleSystem
             CurrentCharge = 0;
 
             // Allow effects to trigger after an action has been performed
-            Effects.ForEach(x => x.AfterActionPerformed());
+            GetActiveEffects().ForEach(x => x.AfterActionPerformed());
         }
 
         /// <summary>
@@ -178,6 +178,14 @@ namespace Framework.BattleSystem
         public IEffect GetEffect(string name)
         {
             return Effects.FirstOrDefault(x => x.Name == name);
+        }
+
+        /// <summary>
+        /// Gets all the active effects on the character
+        /// </summary>
+        public List<IEffect> GetActiveEffects()
+        {
+            return Effects.ToList();
         }
     }
 }
