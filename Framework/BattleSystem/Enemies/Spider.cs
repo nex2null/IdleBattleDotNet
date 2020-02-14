@@ -13,9 +13,9 @@ namespace Framework.BattleSystem.Enemies
             // Initialize base stats
             Name = name;
             Level = 1;
-            Hp = 200;
+            Hp = 300;
             Mp = 0;
-            Str = 1;
+            Str = 2;
             Spd = 7;
             CharacterType = BattleCharacterTypeEnum.EnemyParty;
             HostileToCharacterType = BattleCharacterTypeEnum.PlayerParty;

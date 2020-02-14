@@ -8,6 +8,9 @@ namespace Framework.BattleSystem
         // Properties
         public List<string> Messages { get; set; }
 
+        // Events
+        public event Action<string> OnMessageAdded;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -25,7 +28,7 @@ namespace Framework.BattleSystem
                 Messages.RemoveAt(0);
 
             Messages.Add(message);
-            Console.WriteLine(message);
+            OnMessageAdded?.Invoke(message);
         }
     }
 }

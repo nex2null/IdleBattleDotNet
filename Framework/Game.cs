@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Framework.BattleSystem;
+﻿using Framework.BattleSystem;
 using Framework.BattleSystem.Dungeon;
 using Framework.BattleSystem.Enemies;
 using Framework.Itemization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Framework
 {
@@ -13,6 +14,10 @@ namespace Framework
         // Properties
         public Town Town { get; set; }
         public Battle CurrentBattle { get; set; }
+
+        // Events
+        public event Action OnBattleStart;
+        public event Action OnBattleEnd;
 
         // Singleton boilerplate
         private static Game _instance;
@@ -28,11 +33,11 @@ namespace Framework
         }
 
         /// <summary>
-        /// Starts a new battle
+        /// Initializes a new battle
         /// </summary>
-        public async Task StartBattle(int dungeonId)
+        public void InitializeBattle(int dungeonId)
         {
-            // Verify a battle is not already started
+            // Verify a battle is not already initialized
             if (CurrentBattle != null)
                 return;
 
@@ -48,11 +53,20 @@ namespace Framework
             var battleLog = new BattleLog();
             var playerBattleCharacters = Town.PlayerCharacters.Select(x => x.ToBattleCharacter());
             CurrentBattle = new Battle(playerBattleCharacters.ToList(), dungeon, battleLog);
+        }
 
-            // Lets go
+        /// <summary>
+        /// Starts the battle
+        /// </summary>
+        public async Task StartBattle()
+        {
+            OnBattleStart?.Invoke();
             await CurrentBattle.Start();
         }
 
+        /// <summary>
+        /// Leaves the battle
+        /// </summary>
         public void LeaveBattle()
         {
             // Make sure we're in a battle
@@ -80,6 +94,7 @@ namespace Framework
             }
 
             // Leave the battle
+            OnBattleEnd?.Invoke();
             CurrentBattle = null;
         }
     }

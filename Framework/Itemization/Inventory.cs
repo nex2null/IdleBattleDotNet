@@ -13,6 +13,7 @@ namespace Framework.Itemization
         /// </summary>
         public Inventory()
         {
+            Items = new List<Item>();
         }
 
         /// <summary>

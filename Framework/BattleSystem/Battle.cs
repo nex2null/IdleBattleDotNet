@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Framework.BattleSystem.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Framework.BattleSystem.Enums;
 
 namespace Framework.BattleSystem
 {
@@ -16,6 +15,9 @@ namespace Framework.BattleSystem
         public Dungeon.Dungeon Dungeon { get; set; }
         public BattleLog BattleLog { get; set; }
         public BattleStateEnum CurrentState { get; set; }
+
+        // Events
+        public event Action<BattleStateEnum> OnStateChange;
 
         /// <summary>
         /// Constructor
@@ -29,8 +31,22 @@ namespace Framework.BattleSystem
             Dungeon = dungeon;
             BattleLog = battleLog;
 
-            CurrentState = BattleStateEnum.BattleBegin;
+            ChangeState(BattleStateEnum.BattleBegin);
             UpdateCharactersInCurrentLevel();
+        }
+
+        /// <summary>
+        /// Changes the battle state
+        /// </summary>
+        private void ChangeState(BattleStateEnum state)
+        {
+            // Verify the current state actually changes
+            if (CurrentState == state)
+                return;
+
+            // Update the state and fire event
+            CurrentState = state;
+            OnStateChange?.Invoke(state);
         }
 
         /// <summary>
@@ -40,7 +56,7 @@ namespace Framework.BattleSystem
         {
             if (CurrentState == BattleStateEnum.BattleBegin)
             {
-                CurrentState = BattleStateEnum.InBattle;
+                ChangeState(BattleStateEnum.InBattle);
                 await ProcessBattle();
             }
         }
@@ -55,7 +71,7 @@ namespace Framework.BattleSystem
                 while (CurrentState == BattleStateEnum.InBattle)
                 {
                     // Sleep for a bit
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
 
                     // Update all charges
                     UpdateAllCharges();
@@ -69,7 +85,7 @@ namespace Framework.BattleSystem
                     readyCharacter.Act(AllCharactersInCurrentLevel, BattleLog);
 
                     // Determine the next battle state post-action
-                    CurrentState = DetermineStateAfterAction();
+                    ChangeState(DetermineStateAfterAction());
                 }
             });            
         }
@@ -150,7 +166,7 @@ namespace Framework.BattleSystem
             UpdateCharactersInCurrentLevel();
 
             // Process the batle
-            CurrentState = BattleStateEnum.InBattle;
+            ChangeState(BattleStateEnum.InBattle);
             await ProcessBattle();
         }
     }
