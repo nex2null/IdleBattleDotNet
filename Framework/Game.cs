@@ -82,7 +82,7 @@ namespace Framework
 
                 // Get XP and gold
                 var dungeonDifficulty = CurrentBattle.Dungeon.DifficultyLevel;
-                Town.TotalExperience += dungeonDifficulty * dungeonDifficulty * xpModified;
+                Town.UpdateExperience(dungeonDifficulty * dungeonDifficulty * xpModified);
 
                 // Get Items
                 var defeatedEnemies = dungeon.GetDefeatedEnemies();

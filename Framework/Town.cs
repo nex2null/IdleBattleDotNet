@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Framework.Itemization;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Framework.Itemization;
 
 namespace Framework
 {
     public class Town
     {
         // Properties
-        public int TotalExperience { get; set; }
-        public int TotalGold { get; set; }
-        public Inventory Inventory { get; set; }
-        public List<PlayerCharacter> PlayerCharacters { get; set; }
+        public int TotalExperience { get; private set; }
+        public int TotalGold { get; private set; }
+        public Inventory Inventory { get; private set; }
+        public List<PlayerCharacter> PlayerCharacters { get; private set; }
+
+        // Events
+        public event Action TownUpdate;
 
         /// <summary>
         /// Constructor
@@ -44,6 +46,25 @@ namespace Framework
                 Int = 1,
                 Spd = 2
             });
+        }
+
+        /// <summary>
+        /// Updates the town's gold by a given delta amount. Delta can be either positive or negative.
+        /// </summary>
+        public void UpdateGold(int delta)
+        {
+            TotalGold += delta;
+            TownUpdate?.Invoke();
+        }
+
+        /// <summary>
+        /// Updates the town's experience by a given delta amount. Delta can be either positive or negative.
+        /// </summary>
+        /// <param name="delta"></param>
+        public void UpdateExperience(int delta)
+        {
+            TotalExperience += delta;
+            TownUpdate?.Invoke();
         }
     }
 }

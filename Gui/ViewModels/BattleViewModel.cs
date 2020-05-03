@@ -13,15 +13,11 @@ namespace Gui.ViewModels
         public bool AdvanceButtonVisible { get; private set; }
         public bool LeaveButtonVisible { get; private set; }
 
-        // Dispatcher
-        private Dispatcher _windowDispatcher;
-
         /// <summary>
         /// Constructor
         /// </summary>
-        public BattleViewModel(Dispatcher windowDispatcher)
+        public BattleViewModel(Dispatcher windowDispatcher) : base(windowDispatcher)
         {
-            _windowDispatcher = windowDispatcher;
             BattleMessages = new ObservableCollection<string>();
             StartButtonVisible = true;
         }
@@ -67,7 +63,7 @@ namespace Gui.ViewModels
         /// </summary>
         public void OnBattleMessage(string message)
         {
-            _windowDispatcher.Invoke(() => BattleMessages.Add(message));
+            WindowDispatcher.Invoke(() => BattleMessages.Add(message));
         }
 
         /// <summary>
@@ -75,7 +71,7 @@ namespace Gui.ViewModels
         /// </summary>
         public void OnBattleStateChange(BattleStateEnum newState)
         {
-            _windowDispatcher.Invoke(() =>
+            WindowDispatcher.Invoke(() =>
             {
                 // Hide all the buttons
                 StartButtonVisible = false;
